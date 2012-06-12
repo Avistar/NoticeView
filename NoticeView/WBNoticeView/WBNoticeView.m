@@ -306,6 +306,16 @@
     
     // Make and add the notice view
     self.noticeView = [[WBRedGradientView alloc]initWithFrame:CGRectMake(0.0, hiddenYOrigin, viewWidth, noticeViewHeight + 10.0)];
+    
+    // Add an invisible button that responds to a manual dismiss
+    self._currentNotice = self;
+    CGRect frame = self.noticeView.frame;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    frame.origin.x = frame.origin.y = 0.0;
+    button.frame = frame;
+    [button addTarget:self._currentNotice action:@selector(dismissStickyNotice:) forControlEvents:UIControlEventTouchUpInside];
+    [self.noticeView addSubview:button];
+    
     [view addSubview:self.noticeView];
     
     // Make and add the icon view
@@ -509,7 +519,7 @@
     } completion:^ (BOOL finished) {
         if (finished) {
             // if it's not sticky, hide it automatically
-            if (WBNoticeViewTypeSticky != noticeType) {
+            if (WBNoticeViewTypeSticky != noticeType && delay != -1) {
                 // Display for a while, then hide it again
                 [self dismissNoticeOfType:noticeType duration:duration delay:delay hiddenYOrigin:hiddenYOrigin];
             }
