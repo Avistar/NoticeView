@@ -558,9 +558,4 @@
     self._currentNotice = nil;
 }
 
-- (void)dealloc
-{
-    [self cleanup];
-}
-
 @end
