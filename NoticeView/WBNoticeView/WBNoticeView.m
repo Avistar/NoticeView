@@ -75,6 +75,7 @@
 @synthesize _alpha;
 @synthesize _hiddenYOrigin;
 @synthesize _currentNotice;
+@synthesize noticeDisplayed;
 
 + (WBNoticeView *)defaultManager
 {
@@ -518,6 +519,7 @@
         self.noticeView.alpha = alpha;
     } completion:^ (BOOL finished) {
         if (finished) {
+            noticeDisplayed = YES;
             // if it's not sticky, hide it automatically
             if (WBNoticeViewTypeSticky != noticeType && delay != -1) {
                 // Display for a while, then hide it again
@@ -536,6 +538,7 @@
     } completion:^ (BOOL finished) {
         if (finished) {  
             // Cleanup
+            noticeDisplayed = NO;
             [self cleanup];
         }
     }];

@@ -59,4 +59,6 @@ typedef enum {
                          alpha:(float)alpha
                        yOrigin:(CGFloat)origin;
 
+@property (nonatomic, readonly)  BOOL noticeDisplayed;
+
 @end
